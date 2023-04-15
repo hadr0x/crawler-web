@@ -1,5 +1,5 @@
 const {expect, test} = require('@jest/globals')
-const {normalizeURL} = require('./crawler.js')
+const {normalizeURL, getURLfromHTML} = require('./crawler.js')
 
 
 test('Normalize URL',() =>{
@@ -21,4 +21,34 @@ test('Normalize URL',() =>{
     const norm = normalizeURL(input)
     const output = 'www.google.com/search'
     expect(norm).toEqual(output)
+})
+
+test('Get Urls from HTML',()=>{
+    const bodyHTML = `
+<html>
+    <body>
+        <a href="https://www.google.com/search">qui</a>
+        <a href="https://www.facebook.com/blog">la</a>
+    </body>
+</html>
+`
+    const actual = getURLfromHTML(bodyHTML)
+    const output =['https://www.google.com/search', 'https://www.facebook.com/blog']
+    expect(actual).toEqual(output)
+})
+
+test('Get Urls from HTML error',()=>{
+    const bodyHTML = `
+<html>
+    <body>
+        <a href="Invalid">.</a>
+        <a href="https://www.facebook.com/blog">FB</a>
+        <a href="https://www.amazon.com">Amazon</a>
+        <a href="Nothing">.</a>
+    </body>
+</html>
+`
+    const actual = getURLfromHTML(bodyHTML)
+    const output =['https://www.facebook.com/blog','https://www.amazon.com/']
+    expect(actual).toEqual(output)
 })
