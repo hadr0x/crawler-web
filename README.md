@@ -12,3 +12,11 @@ Installare il framework [`jest`](https://jestjs.io/docs/getting-started) con `np
 ```
  npm install --save-dev jest
 ```
+
+Installare [`jsdom`](https://github.com/jsdom/jsdom):
+
+```
+ npm install jsdom
+```
+
+Utilizzo `jsdom` per construire il DOM tramite un input HTML ed estrarre i links presente nel codice tramite la funzione `getURLfromHTML`
